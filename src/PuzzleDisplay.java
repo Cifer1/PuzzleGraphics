@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
 
 public class PuzzleDisplay extends JFrame {
 
@@ -35,6 +36,21 @@ public class PuzzleDisplay extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		
+		JPanel puzzlePanel = new PuzzlePanel();
+		contentPane.add(puzzlePanel, BorderLayout.CENTER);
+		
+		JPanel sidePanel = new SidePanel();
+		contentPane.add(sidePanel, BorderLayout.EAST);
+		
+		JPanel controlPanel = new JPanel();
+		contentPane.add(controlPanel, BorderLayout.NORTH);
+		
+		JButton resetButton = new JButton("Reset");
+		controlPanel.add(resetButton);
+		
+		JButton solveButton = new JButton("Solve");
+		controlPanel.add(solveButton);
 	}
 
 }
