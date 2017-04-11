@@ -1,3 +1,4 @@
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
@@ -8,7 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
-public class GraphicalPuzzlePiece extends PuzzlePiece{
+public class GraphicalPuzzlePiece extends PuzzlePiece {
 	private BufferedImage pieceImg = null;
 	private JComponent pieceComponent = null;
 	public GraphicalPuzzlePiece(int north, int east, int south, int west, File src){
@@ -20,10 +21,10 @@ public class GraphicalPuzzlePiece extends PuzzlePiece{
 		pieceComponent = new JComponent() {
 			public void paintComponent(Graphics g){
 				super.paintComponent(g);
-				
+				g.drawImage(pieceImg, getWidth()/2, getHeight()/2, null);
 				
 			}
-		}
+		};
 	}
 	@Override
 	public void rotateClockwise(){

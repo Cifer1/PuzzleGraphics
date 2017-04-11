@@ -1,5 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Rectangle;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -51,6 +54,7 @@ public class PuzzleDisplay extends JFrame {
 		
 		JButton solveButton = new JButton("Solve");
 		controlPanel.add(solveButton);
+		
 	}
 
 }
