@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
 public class GraphicalPuzzlePiece extends PuzzlePiece {
+
 	private BufferedImage pieceImg = null;
 	private JComponent pieceComponent = null;
 	public GraphicalPuzzlePiece(int north, int east, int south, int west, File src){
@@ -22,10 +23,11 @@ public class GraphicalPuzzlePiece extends PuzzlePiece {
 			public void paintComponent(Graphics g){
 				super.paintComponent(g);
 				g.drawImage(pieceImg, getWidth()/2, getHeight()/2, null);
-				
+
 			}
 		};
 	}
+
 	@Override
 	public void rotateClockwise(){
 		super.rotateClockwise();
@@ -33,18 +35,18 @@ public class GraphicalPuzzlePiece extends PuzzlePiece {
 		at.translate(pieceComponent.getWidth()/2, pieceComponent.getHeight()/2);
 		at.rotate(-Math.PI/4);
 		at.translate(-pieceImg.getWidth()/2, -pieceImg.getHeight()/2);
-		
+
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(pieceImg, at, null);
 	}
 	@Override
-	public void rotateCounterclockwise(){
-		super.rotateCounterclockwise();
+	public void rotateCounterClockwise(){
+		super.rotateCounterClockwise();
 		AffineTransform at = new AffineTransform();
 		at.translate(pieceComponent.getWidth()/2, pieceComponent.getHeight()/2);
 		at.rotate(Math.PI/4);
 		at.translate(-pieceImg.getWidth()/2, -pieceImg.getHeight()/2);
-		
+
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(pieceImg, at, null);
 	}
