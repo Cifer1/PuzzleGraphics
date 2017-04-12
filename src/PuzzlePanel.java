@@ -1,14 +1,15 @@
+import java.awt.Color;
 import java.awt.Graphics;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 public class PuzzlePanel extends JPanel {
-
+	private JigsawPuzzle puzzle;
 	/**
 	 * Create the panel.
 	 */
 	public PuzzlePanel() {
-
 	}
 	public void paintComponent(Graphics g){
 		int botLeftX = getWidth()/4;
