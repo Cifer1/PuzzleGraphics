@@ -6,7 +6,9 @@ public class JigsawPuzzle {
 	private ArrayList<PuzzlePiece> pieceStorage = new ArrayList<PuzzlePiece>();
 	
 	public JigsawPuzzle(int width, int height, ArrayList<PuzzlePiece> piece){
-		
+		for(int i = 0; i < piece.size(); i++){
+			pieceStorage.set(i, piece.get(i));
+		}
 	}
 	
 	public boolean doesFit(int x, int y, PuzzlePiece piece){
@@ -20,7 +22,7 @@ public class JigsawPuzzle {
 	
 	//solves the jigsaw puzzle if user gives up
 	public void solvePuzzle(){
-		System.out.println("test solvePuzzle");
+		System.out.println("tesaddt solvePuzzle");
 	}
 	
 	//places a free piece puzzle piece onto the board

@@ -24,10 +24,21 @@ public class PuzzlePiece {
 	
 	public void rotateClockwise(){
 		System.out.println("clockwise test");
+		int temp = north;
+		north = east;
+		east = south;
+		south = west;
+		west = temp;
+		
 	}
 	
 	public void rotateCounterClockwise(){
 		System.out.println("counterClockwise test");
+		int temp = north;
+		north = west;
+		west = south;
+		south = east;
+		east = temp;
 	}
 	
 	public int getNorth(){
