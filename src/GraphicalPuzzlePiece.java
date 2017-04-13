@@ -1,6 +1,9 @@
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,6 +16,10 @@ public class GraphicalPuzzlePiece extends PuzzlePiece {
 
 	private BufferedImage pieceImg = null;
 	private JComponent pieceComponent = null;
+	private int initX = 0;
+	private int initY = 0;
+	private int screenX = 0;
+	private int screenY = 0;
 	public GraphicalPuzzlePiece(int north, int east, int south, int west, File src){
 		super(north, east, south, west);
 		try{
@@ -23,9 +30,65 @@ public class GraphicalPuzzlePiece extends PuzzlePiece {
 			public void paintComponent(Graphics g){
 				super.paintComponent(g);
 				g.drawImage(pieceImg, getWidth()/2, getHeight()/2, null);
+				System.out.println("hello, I'm drawing the piece");
 
 			}
 		};
+		pieceComponent.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				screenX = e.getXOnScreen();
+				screenY = e.getYOnScreen();
+				
+				initX = pieceComponent.getX();
+				initY = pieceComponent.getY();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		pieceComponent.addMouseMotionListener(new MouseMotionListener(){
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				// TODO Auto-generated method stub
+				int deltaX = e.getXOnScreen() - screenX;
+				int deltaY = e.getYOnScreen() - screenY;
+				pieceComponent.setLocation(initX + deltaX, initY + deltaY);
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
 	}
 
 	@Override
@@ -36,6 +99,7 @@ public class GraphicalPuzzlePiece extends PuzzlePiece {
 		at.rotate(-Math.PI/4);
 		at.translate(-pieceImg.getWidth()/2, -pieceImg.getHeight()/2);
 
+		Graphics g = pieceComponent.getGraphics();
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(pieceImg, at, null);
 	}
@@ -47,7 +111,11 @@ public class GraphicalPuzzlePiece extends PuzzlePiece {
 		at.rotate(Math.PI/4);
 		at.translate(-pieceImg.getWidth()/2, -pieceImg.getHeight()/2);
 
+		Graphics g = pieceComponent.getGraphics();
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(pieceImg, at, null);
+	}
+	public void repaint(){
+		pieceComponent.repaint();
 	}
 }

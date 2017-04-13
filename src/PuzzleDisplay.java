@@ -25,7 +25,7 @@ import java.awt.GridLayout;
 public class PuzzleDisplay extends JFrame {
 
 	private JPanel contentPane;
-	private JPanel sidePanel;
+	private JPanel piecesPanel;
 
 	/**
 	 * Launch the application.
@@ -55,28 +55,23 @@ public class PuzzleDisplay extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setResizable(false);
-				contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setLayout(new BorderLayout(0, 0));
+
+		JPanel controlPanel = new JPanel();
+		contentPane.add(controlPanel, BorderLayout.NORTH);
+		controlPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-				JPanel controlPanel = new JPanel();
-				contentPane.add(controlPanel, BorderLayout.NORTH);
-				controlPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-				
-				JButton solveButton = new JButton("Solve");
-				solveButton.setHorizontalAlignment(SwingConstants.LEFT);
-				controlPanel.add(solveButton);
-				
-				JButton resetButton = new JButton("Reset");
-				resetButton.setHorizontalAlignment(SwingConstants.LEFT);
-				controlPanel.add(resetButton);
+		JButton solveButton = new JButton("Solve");
+		solveButton.setHorizontalAlignment(SwingConstants.LEFT);
+		controlPanel.add(solveButton);
+		
+		JButton resetButton = new JButton("Reset");
+		resetButton.setHorizontalAlignment(SwingConstants.LEFT);
+		controlPanel.add(resetButton);
 		JPanel puzzlePanel = new PuzzlePanel();
 		puzzlePanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Puzzle", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		contentPane.add(puzzlePanel, BorderLayout.CENTER);
-		
-		sidePanel = new SidePanel();
-		sidePanel.setBorder(new TitledBorder(null, "Pieces", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		contentPane.add(sidePanel, BorderLayout.SOUTH);
-		sidePanel.setMinimumSize(new Dimension(getWidth(), getHeight()/2));
-		System.out.println(sidePanel.getBounds());
+
 		
 		
 		

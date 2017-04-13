@@ -1,15 +1,66 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 public class PuzzlePanel extends JPanel {
 	private JigsawPuzzle puzzle;
+
 	/**
 	 * Create the panel.
 	 */
 	public PuzzlePanel() {
+		ArrayList<PuzzlePiece> pieces = new ArrayList<PuzzlePiece>();
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.CLUB_OUT, PuzzlePiece.HEART_OUT, PuzzlePiece.DIAMOND_IN, PuzzlePiece.CLUB_IN, new File("img/piece_1.png")));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.SPADE_OUT, PuzzlePiece.DIAMOND_OUT, PuzzlePiece.SPADE_IN, PuzzlePiece.HEART_IN, new File("img/piece_2.png")));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.HEART_OUT, PuzzlePiece.SPADE_OUT, PuzzlePiece.SPADE_IN, PuzzlePiece.CLUB_IN, new File("img/piece_3.png")));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.HEART_OUT, PuzzlePiece.DIAMOND_OUT, PuzzlePiece.CLUB_IN, PuzzlePiece.CLUB_IN, new File("img/piece_4.png")));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.SPADE_OUT, PuzzlePiece.SPADE_OUT, PuzzlePiece.HEART_IN, PuzzlePiece.CLUB_IN, new File("img/piece_5.png")));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.HEART_OUT, PuzzlePiece.DIAMOND_OUT, PuzzlePiece.DIAMOND_IN, PuzzlePiece.HEART_IN, new File("img/piece_6.png")));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.SPADE_OUT, PuzzlePiece.DIAMOND_OUT, PuzzlePiece.HEART_IN, PuzzlePiece.DIAMOND_IN, new File("img/piece_7.png")));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.CLUB_OUT, PuzzlePiece.HEART_OUT, PuzzlePiece.SPADE_IN, PuzzlePiece.HEART_IN, new File("img/piece_8.png")));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.DIAMOND_OUT, PuzzlePiece.CLUB_OUT, PuzzlePiece.CLUB_IN, PuzzlePiece.DIAMOND_IN, new File("img/piece_9.png")));
+
+		puzzle = new JigsawPuzzle(3,3,pieces);
+		
+		addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 	public void paintComponent(Graphics g){
 		int botLeftX = getWidth()/4;
@@ -25,6 +76,16 @@ public class PuzzlePanel extends JPanel {
 			g.drawLine(botLeftX, botLeftY+vertLineInterval*i, botLeftX+sideLen, botLeftY+vertLineInterval*i);
 
 		}
+		ArrayList<PuzzlePiece> freePieces = puzzle.getFreePieces();
+		for(int i = 0; i < freePieces.size();i++){
+			System.out.println("I'm printing freePieces");
+			if(freePieces.get(i) instanceof GraphicalPuzzlePiece){
+				((GraphicalPuzzlePiece) freePieces.get(i)).repaint();
+			}
+		}
+	}
+	public ArrayList<PuzzlePiece> getFreePieces(){
+		return puzzle.getFreePieces();
 	}
 
 }
