@@ -7,7 +7,7 @@ public class JigsawPuzzle {
 	
 	public JigsawPuzzle(int width, int height, ArrayList<PuzzlePiece> piece){
 		for(int i = 0; i < piece.size(); i++){
-			pieceStorage.set(i, piece.get(i));
+			pieceStorage.add(piece.get(i));
 		}
 	}
 	

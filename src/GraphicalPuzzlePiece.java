@@ -15,7 +15,7 @@ import javax.swing.JComponent;
 public class GraphicalPuzzlePiece extends PuzzlePiece {
 
 	private BufferedImage pieceImg = null;
-	private JComponent pieceComponent = null;
+	public JComponent pieceComponent = null;
 	private int initX = 0;
 	private int initY = 0;
 	private int screenX = 0;
@@ -25,11 +25,13 @@ public class GraphicalPuzzlePiece extends PuzzlePiece {
 		try{
 			pieceImg = ImageIO.read(src);
 		} catch(IOException e){
+			System.out.println(e);
+			e.printStackTrace();
 		}
 		pieceComponent = new JComponent() {
 			public void paintComponent(Graphics g){
 				super.paintComponent(g);
-				g.drawImage(pieceImg, getWidth()/2, getHeight()/2, null);
+				g.drawImage(pieceImg, 0, 0, null);
 				System.out.println("hello, I'm drawing the piece");
 
 			}
@@ -117,5 +119,8 @@ public class GraphicalPuzzlePiece extends PuzzlePiece {
 	}
 	public void repaint(){
 		pieceComponent.repaint();
+	}
+	public BufferedImage getImage(){
+		return pieceImg;
 	}
 }
