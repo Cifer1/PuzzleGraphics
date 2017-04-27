@@ -45,9 +45,15 @@ public class PuzzlePanel extends JPanel {
 				add(((GraphicalPuzzlePiece) freePieces.get(i)).pieceComponent);
 				((GraphicalPuzzlePiece) freePieces.get(i)).pieceComponent.setVisible(true);
 				//System.out.println(pieceComponent.getLocationOnScreen());
+<<<<<<< HEAD
+				((GraphicalPuzzlePiece) freePieces.get(i)).pieceComponent.repaint();
+				
+				
+=======
 				System.out.println(((GraphicalPuzzlePiece) freePieces.get(i)).pieceComponent);
 				((GraphicalPuzzlePiece) freePieces.get(i)).pieceComponent.getGraphics().drawImage(((GraphicalPuzzlePiece)
 				freePieces.get(i)).getImage(), 0, 0, null);
+>>>>>>> 679cca1... post vacay
 
 			}
 		}
