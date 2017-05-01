@@ -1,7 +1,12 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -9,9 +14,14 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
+import java.awt.Toolkit;
 
 public class PuzzlePanel extends JPanel {
 	private JigsawPuzzle puzzle;
+	private  int botLeftX;
+	private  int botLeftY;
+	private  int sideLen;
+	private GraphicalPuzzlePiece tracking;
 
 	/**
 	 * Create the panel.
@@ -24,44 +34,51 @@ public class PuzzlePanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		ArrayList<PuzzlePiece> pieces = new ArrayList<PuzzlePiece>();
-		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.CLUB_OUT, PuzzlePiece.HEART_OUT, PuzzlePiece.DIAMOND_IN, PuzzlePiece.CLUB_IN, new File("img/piece_1.png")));
-		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.SPADE_OUT, PuzzlePiece.DIAMOND_OUT, PuzzlePiece.SPADE_IN, PuzzlePiece.HEART_IN, new File("img/piece_2.png")));
-		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.HEART_OUT, PuzzlePiece.SPADE_OUT, PuzzlePiece.SPADE_IN, PuzzlePiece.CLUB_IN, new File("img/piece_3.png")));
-		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.HEART_OUT, PuzzlePiece.DIAMOND_OUT, PuzzlePiece.CLUB_IN, PuzzlePiece.CLUB_IN, new File("img/piece_4.png")));
-		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.SPADE_OUT, PuzzlePiece.SPADE_OUT, PuzzlePiece.HEART_IN, PuzzlePiece.CLUB_IN, new File("img/piece_5.png")));
-		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.HEART_OUT, PuzzlePiece.DIAMOND_OUT, PuzzlePiece.DIAMOND_IN, PuzzlePiece.HEART_IN, new File("img/piece_6.png")));
-		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.SPADE_OUT, PuzzlePiece.DIAMOND_OUT, PuzzlePiece.HEART_IN, PuzzlePiece.DIAMOND_IN, new File("img/piece_7.png")));
-		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.CLUB_OUT, PuzzlePiece.HEART_OUT, PuzzlePiece.SPADE_IN, PuzzlePiece.HEART_IN, new File("img/piece_8.png")));
-		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.DIAMOND_OUT, PuzzlePiece.CLUB_OUT, PuzzlePiece.CLUB_IN, PuzzlePiece.DIAMOND_IN, new File("img/piece_9.png")));
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int horizOffset = (int) (screenSize.getWidth()/25);
+		int vertOffset = (int) (screenSize.getWidth()/25);
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.CLUB_OUT, PuzzlePiece.HEART_OUT, PuzzlePiece.DIAMOND_IN, PuzzlePiece.CLUB_IN, new File("img/piece_1.png"), horizOffset, vertOffset));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.SPADE_OUT, PuzzlePiece.DIAMOND_OUT, PuzzlePiece.SPADE_IN, PuzzlePiece.HEART_IN, new File("img/piece_2.png"), horizOffset, vertOffset*3));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.HEART_OUT, PuzzlePiece.SPADE_OUT, PuzzlePiece.SPADE_IN, PuzzlePiece.CLUB_IN, new File("img/piece_3.png"), horizOffset, vertOffset*5));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.HEART_OUT, PuzzlePiece.DIAMOND_OUT, PuzzlePiece.CLUB_IN, PuzzlePiece.CLUB_IN, new File("img/piece_4.png"), horizOffset*3, vertOffset));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.SPADE_OUT, PuzzlePiece.SPADE_OUT, PuzzlePiece.HEART_IN, PuzzlePiece.CLUB_IN, new File("img/piece_5.png"), horizOffset*5, vertOffset));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.HEART_OUT, PuzzlePiece.DIAMOND_OUT, PuzzlePiece.DIAMOND_IN, PuzzlePiece.HEART_IN, new File("img/piece_6.png"), horizOffset*7, vertOffset));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.SPADE_OUT, PuzzlePiece.DIAMOND_OUT, PuzzlePiece.HEART_IN, PuzzlePiece.DIAMOND_IN, new File("img/piece_7.png"), horizOffset, vertOffset*7));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.CLUB_OUT, PuzzlePiece.HEART_OUT, PuzzlePiece.SPADE_IN, PuzzlePiece.HEART_IN, new File("img/piece_8.png"), horizOffset, vertOffset*9));
+		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.DIAMOND_OUT, PuzzlePiece.CLUB_OUT, PuzzlePiece.CLUB_IN, PuzzlePiece.DIAMOND_IN, new File("img/piece_9.png"), horizOffset*9, vertOffset));
 		
 		puzzle = new JigsawPuzzle(3,3,pieces);
-		ArrayList<PuzzlePiece> freePieces = puzzle.getFreePieces();
-
-		for (int i = 0; i < freePieces.size(); i++) {
-			System.out.println("I'm printing freePieces");
-			System.out.println(freePieces.get(i));
-			if (freePieces.get(i) instanceof GraphicalPuzzlePiece) {
-				System.out.println("it's graphical");
-				add(((GraphicalPuzzlePiece) freePieces.get(i)).pieceComponent);
-				((GraphicalPuzzlePiece) freePieces.get(i)).pieceComponent.setVisible(true);
-				//System.out.println(pieceComponent.getLocationOnScreen());
-<<<<<<< HEAD
-				((GraphicalPuzzlePiece) freePieces.get(i)).pieceComponent.repaint();
-				
-				
-=======
-				System.out.println(((GraphicalPuzzlePiece) freePieces.get(i)).pieceComponent);
-				((GraphicalPuzzlePiece) freePieces.get(i)).pieceComponent.getGraphics().drawImage(((GraphicalPuzzlePiece)
-				freePieces.get(i)).getImage(), 0, 0, null);
->>>>>>> 679cca1... post vacay
-
-			}
-		}
 		addMouseListener(new MouseListener(){
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO Auto-generated method stub
+				int x = arg0.getX();
+				int y = arg0.getY();
+				if(arg0.isControlDown()){
+					GraphicalPuzzlePiece rotated = getPieceAtPoint(x,y);
+					if(rotated!=null) rotated.rotateClockwise();
+					repaint();
+					return;
+				}
+				if(tracking==null){
+				
+					System.out.println("click x: " + x + "click y: " + y );
+					tracking = getPieceAtPoint(x,y);
+				}
+				else{
+					if(x>botLeftX&&x<botLeftX+sideLen&&y>botLeftY&&y<botLeftY+sideLen){
+						int[] coords = getBoardPosAtPoint(x,y);
+						System.out.println("hi");
+						if(!puzzle.placePiece(coords[0], coords[1], tracking)) tracking.goHome();
+						else{
+							tracking.setCurrX(coords[0] * (sideLen/3) + botLeftX);
+							tracking.setCurrY(coords[1] * (sideLen/3) + botLeftY);
+						}
+						repaint();
+					}
+					tracking=null;
+				}
 				
 			}
 
@@ -90,14 +107,43 @@ public class PuzzlePanel extends JPanel {
 			}
 			
 		});
+		addMouseMotionListener(new MouseMotionListener(){
+
+			@Override
+			public void mouseDragged(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				if(tracking==null)tracking = getPieceAtPoint(arg0.getX(),arg0.getY());
+
+				if(tracking!=null){
+					tracking.setCurrX(arg0.getX()-tracking.getImage().getWidth()/2);
+					tracking.setCurrY(arg0.getY()-tracking.getImage().getHeight()/2);
+					repaint();
+				}
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				if(tracking!=null){
+					tracking.setCurrX(arg0.getX()-tracking.getImage().getWidth()/2);
+					tracking.setCurrY(arg0.getY()-tracking.getImage().getHeight()/2);
+					repaint();
+				}
+				
+			}
+			
+		});
 	}
 	public void paintComponent(Graphics g){
-		int botLeftX = getWidth()/4;
-		int botLeftY = getHeight()/4;
-		int sideLen = Math.min(getWidth()/2, getHeight()/2);
+		g.clearRect(0, 0, getWidth(), getHeight());
+		sideLen = 70*3;
+
+		botLeftX = getWidth()/2 - sideLen/2;
+		botLeftY = getHeight()/2 - sideLen/2; 
+		
 		g.drawRect(botLeftX, botLeftY, sideLen, sideLen);
-		int horizLineInterval = (sideLen)/3;
-		int vertLineInterval  = (sideLen)/3;
+		int horizLineInterval = sideLen/3;
+		int vertLineInterval  = sideLen/3;
 		
 		for(int i = 1; i < 3; i++){
 			g.drawLine(botLeftX+horizLineInterval*i, botLeftY, botLeftX+horizLineInterval*i, botLeftY+sideLen);
@@ -106,15 +152,13 @@ public class PuzzlePanel extends JPanel {
 		}
 		ArrayList<PuzzlePiece> freePieces = puzzle.getFreePieces();
 		for(int i = 0; i < freePieces.size();i++){
-			System.out.println("I'm printing freePieces");
-			System.out.println(freePieces.get(i));
+//			System.out.println("I'm printing freePieces");
+//			System.out.println(freePieces.get(i));
 			if(freePieces.get(i) instanceof GraphicalPuzzlePiece){
-				System.out.println("it's graphical");
-				JComponent pieceComponent = ((GraphicalPuzzlePiece)freePieces.get(i)).pieceComponent;
-//				add(pieceComponent);
-//				pieceComponent.setVisible(true);
-//				System.out.println(pieceComponent.getLocationOnScreen());
-				g.drawImage(((GraphicalPuzzlePiece) freePieces.get(i)).getImage(), 0, 0, null);
+//				System.out.println("it's graphical");
+				GraphicalPuzzlePiece curr = (GraphicalPuzzlePiece) freePieces.get(i);
+
+				g.drawImage(curr.getImage(), curr.getCurrX(), curr.getCurrY(), null);
 
 
 			}
@@ -122,6 +166,43 @@ public class PuzzlePanel extends JPanel {
 	}
 	public ArrayList<PuzzlePiece> getFreePieces(){
 		return puzzle.getFreePieces();
+	}
+	public GraphicalPuzzlePiece getPieceAtPoint(int x, int y){
+		if((x>(botLeftX)&&x<botLeftX+sideLen) && (y>botLeftY&&y<botLeftY+sideLen)){
+			int[] coords = getBoardPosAtPoint(x,y);
+			return (GraphicalPuzzlePiece) puzzle.removePiece(coords[0], coords[1]);
+		}
+		else{
+			ArrayList<PuzzlePiece> freePieces = puzzle.getFreePieces();
+			for(int i = 0; i < freePieces.size(); i++){
+				GraphicalPuzzlePiece curr =((GraphicalPuzzlePiece)freePieces.get(i));
+				System.out.println(curr.getCurrX() + "  " + curr.getCurrY());
+
+				if(x>curr.getCurrX() && x < curr.getCurrX() + curr.getImage().getWidth() && y > curr.getCurrY() && y < curr.getCurrY() + curr.getImage().getHeight()) return curr;
+			}
+			return null;
+
+		}
+	}
+	public int[] getBoardPosAtPoint(int x, int y){
+		int[] coords = new int[2];
+		if(x>botLeftX && x<botLeftX+sideLen&& y>botLeftY&&y<botLeftY+sideLen){
+			coords[0] = (x-botLeftX)/(sideLen/3);
+			coords[1] = (y-botLeftY)/(sideLen/3);
+			return coords;
+		}
+		return null;
+	}
+	public void reset(){
+		ArrayList<PuzzlePiece> freePieces = puzzle.getFreePieces();
+		for(int i = 0; i < freePieces.size(); i++){
+			((GraphicalPuzzlePiece) freePieces.get(i)).goHome();
+		}
+		for(int i = 0; i < 3; i++){
+			for(int j = 0; j < 3; j++){
+				if (puzzle.getPiece(i, j) != null)((GraphicalPuzzlePiece)puzzle.removePiece(i, j)).goHome();
+			}
+		}
 	}
 
 }

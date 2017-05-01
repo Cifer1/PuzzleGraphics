@@ -6,6 +6,8 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,11 +23,12 @@ import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PuzzleDisplay extends JFrame {
 
 	private JPanel contentPane;
-	private JPanel piecesPanel;
 
 	/**
 	 * Launch the application.
@@ -65,13 +68,21 @@ public class PuzzleDisplay extends JFrame {
 		solveButton.setHorizontalAlignment(SwingConstants.LEFT);
 		controlPanel.add(solveButton);
 		
-		JButton resetButton = new JButton("Reset");
-		resetButton.setHorizontalAlignment(SwingConstants.LEFT);
-		controlPanel.add(resetButton);
-		JPanel puzzlePanel = new PuzzlePanel();
+		
+		
+		PuzzlePanel puzzlePanel = new PuzzlePanel();
 		puzzlePanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Puzzle", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		contentPane.add(puzzlePanel, BorderLayout.CENTER);
-
+		
+		JButton resetButton = new JButton("Reset");
+		resetButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				puzzlePanel.reset();
+				repaint();
+			}
+		});
+		resetButton.setHorizontalAlignment(SwingConstants.LEFT);
+		controlPanel.add(resetButton);
 		
 		
 		
