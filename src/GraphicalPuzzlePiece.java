@@ -5,7 +5,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,14 +15,12 @@ import javax.swing.JComponent;
 public class GraphicalPuzzlePiece extends PuzzlePiece {
 
 	private BufferedImage pieceImg = null;
-	
-	private int currX = 0;
-	private int currY = 0;
-	public final int homeX;
-	public final int homeY;
-	
-
-	public GraphicalPuzzlePiece(int north, int east, int south, int west, File src, int homeX, int homeY){
+	public JComponent pieceComponent = null;
+	private int initX = 0;
+	private int initY = 0;
+	private int screenX = 0;
+	private int screenY = 0;
+	public GraphicalPuzzlePiece(int north, int east, int south, int west, File src){
 		super(north, east, south, west);
 		try{
 			pieceImg = ImageIO.read(src);
@@ -31,53 +28,101 @@ public class GraphicalPuzzlePiece extends PuzzlePiece {
 			System.out.println(e);
 			e.printStackTrace();
 		}
-		this.homeX = homeX;
-		currX = homeX;
-		this.homeY = homeY;
-		currY = homeY;
-		System.out.println("img height: " + pieceImg.getHeight());
+		pieceComponent = new JComponent() {
+			public void paintComponent(Graphics g){
+				super.paintComponent(g);
+				g.drawImage(pieceImg, 0, 0, null);
+				System.out.println("hello, I'm drawing the piece");
+
+			}
+		};
+		pieceComponent.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				screenX = e.getXOnScreen();
+				screenY = e.getYOnScreen();
+				
+				initX = pieceComponent.getX();
+				initY = pieceComponent.getY();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		pieceComponent.addMouseMotionListener(new MouseMotionListener(){
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				// TODO Auto-generated method stub
+				int deltaX = e.getXOnScreen() - screenX;
+				int deltaY = e.getYOnScreen() - screenY;
+				pieceComponent.setLocation(initX + deltaX, initY + deltaY);
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
 	}
+	
+	
 
 	@Override
 	public void rotateClockwise(){
 		super.rotateClockwise();
 		AffineTransform at = new AffineTransform();
-		at.rotate(Math.PI/2, pieceImg.getWidth()/2, pieceImg.getHeight()/2);
-		
-		AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-		pieceImg = op.filter(pieceImg, null);
+		at.translate(pieceComponent.getWidth()/2, pieceComponent.getHeight()/2);
+		at.rotate(-Math.PI/4);
+		at.translate(-pieceImg.getWidth()/2, -pieceImg.getHeight()/2);
+
+		Graphics g = pieceComponent.getGraphics();
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.drawImage(pieceImg, at, null);
 	}
 	@Override
 	public void rotateCounterClockwise(){
 		super.rotateCounterClockwise();
 		AffineTransform at = new AffineTransform();
-		at.rotate(-Math.PI/2, pieceImg.getWidth()/2, pieceImg.getHeight()/2);
-		
-		AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-		pieceImg = op.filter(pieceImg, null);
+		at.translate(pieceComponent.getWidth()/2, pieceComponent.getHeight()/2);
+		at.rotate(Math.PI/4);
+		at.translate(-pieceImg.getWidth()/2, -pieceImg.getHeight()/2);
 
+		Graphics g = pieceComponent.getGraphics();
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.drawImage(pieceImg, at, null);
+	}
+	public void repaint(){
+		pieceComponent.repaint();
 	}
 	public BufferedImage getImage(){
 		return pieceImg;
-	}
-	public void goHome(){
-		currX = homeX;
-		currY = homeY;
-	}
-
-	public int getCurrX() {
-		return currX;
-	}
-
-	public void setCurrX(int currX) {
-		this.currX = currX;
-	}
-
-	public int getCurrY() {
-		return currY;
-	}
-
-	public void setCurrY(int currY) {
-		this.currY = currY;
 	}
 }

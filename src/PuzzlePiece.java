@@ -23,7 +23,7 @@ public class PuzzlePiece {
 	}
 	
 	public void rotateClockwise(){
-		System.out.println("clockwise test");
+
 		int temp = north;
 		north = east;
 		east = south;
@@ -33,7 +33,7 @@ public class PuzzlePiece {
 	}
 	
 	public void rotateCounterClockwise(){
-		System.out.println("counterClockwise test");
+
 		int temp = north;
 		north = west;
 		west = south;
@@ -55,5 +55,11 @@ public class PuzzlePiece {
 	
 	public int getWest(){
 		return west;
+	}
+	public static void main(String[] args){
+		PuzzlePiece p = new PuzzlePiece(-1,-4,3,2);
+		System.out.println(p.getEast());
+		p.rotateCounterClockwise();
+		System.out.println(p.getEast());
 	}
 }
