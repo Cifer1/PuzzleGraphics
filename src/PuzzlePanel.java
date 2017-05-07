@@ -55,7 +55,7 @@ public class PuzzlePanel extends JPanel {
 				// TODO Auto-generated method stub
 				int x = arg0.getX();
 				int y = arg0.getY();
-				if(arg0.isControlDown()){
+				if(arg0.isControlDown()&&!(x>botLeftX&&x<botLeftX+sideLen&&y>botLeftY&&y<botLeftY+sideLen)){
 					GraphicalPuzzlePiece rotated = getPieceAtPoint(x,y);
 					if(rotated!=null) rotated.rotateClockwise();
 					repaint();
@@ -69,11 +69,11 @@ public class PuzzlePanel extends JPanel {
 				else{
 					if(x>botLeftX&&x<botLeftX+sideLen&&y>botLeftY&&y<botLeftY+sideLen){
 						int[] coords = getBoardPosAtPoint(x,y);
-						System.out.println("hi");
+						System.out.println("x: " + coords[0]  + " y: " + coords[1]);
 						if(!puzzle.placePiece(coords[0], coords[1], tracking)) tracking.goHome();
 						else{
-							tracking.setCurrX(coords[0] * (sideLen/3) + botLeftX);
-							tracking.setCurrY(coords[1] * (sideLen/3) + botLeftY);
+							tracking.setCurrX(coords[0] * (sideLen/3) + botLeftX - tracking.getImage().getWidth()/5);
+							tracking.setCurrY(coords[1] * (sideLen/3) + botLeftY - tracking.getImage().getWidth()/5);
 						}
 						repaint();
 					}
@@ -162,6 +162,15 @@ public class PuzzlePanel extends JPanel {
 				g.drawImage(curr.getImage(), curr.getCurrX(), curr.getCurrY(), null);
 
 
+			}
+		}
+		for(int i = 0; i < puzzle.getHeight(); i++){
+			for(int j = 0; j < puzzle.getWidth() ; j++ ){
+				if(puzzle.getPiece(j, i)!=null) {
+					System.out.println("painting the board pieces");
+					GraphicalPuzzlePiece curr = (GraphicalPuzzlePiece) puzzle.getPiece(j, i);
+					g.drawImage(curr.getImage(), curr.getCurrX(), curr.getCurrY(), null);
+				}
 			}
 		}
 	}

@@ -13,7 +13,7 @@ public class JigsawPuzzle {
 	}
 	
 	public boolean doesFit(int x, int y, PuzzlePiece piece){
-		if(board.isOccupied(x, y+1)){
+		if(board.isOccupied(x+1, y)){
 			if(piece.getEast()+board.getPiece(x+1, y).getWest()!=0){
 				return false;
 			}
@@ -48,7 +48,7 @@ public class JigsawPuzzle {
 	
 	//places a free piece puzzle piece onto the board
 	public boolean placePiece(int x, int y, PuzzlePiece piece){ 
-		if(board.isValid(x, y)){
+		if(board.isValid(x, y)&&doesFit(x,y,piece)){
 			board.placePiece(x, y, piece);
 			pieceStorage.remove(piece);
 			return true;
@@ -60,7 +60,7 @@ public class JigsawPuzzle {
 	public PuzzlePiece removePiece(int x, int y){
 		if(board.isOccupied(x, y)){
 			pieceStorage.add(board.getPiece(x, y));
-			board.removePiece(x, y);
+			return board.removePiece(x, y);
 			
 		}
 		return null;
@@ -80,7 +80,7 @@ public class JigsawPuzzle {
 	
 	public PuzzlePiece getPiece(int x, int y){
 		if(board.isOccupied(x, y)){
-			board.getPiece(x, y);
+			return board.getPiece(x, y);
 		}
 		return null;
 	}

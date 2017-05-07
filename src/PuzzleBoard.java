@@ -71,9 +71,8 @@ public class PuzzleBoard {
 	}
 	
 	public boolean isOccupied(int x, int y){
-		System.out.println(board[x][y]);
-		if(isValid(x,y) && board[x][y]==null) return false;
-		return true;
+		if(isValid(x,y)) return board[x][y]!=null;
+		return false;
 	}
 
 
