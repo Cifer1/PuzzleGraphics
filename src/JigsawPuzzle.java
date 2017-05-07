@@ -9,6 +9,7 @@ public class JigsawPuzzle {
 		for(int i = 0; i < piece.size(); i++){
 			pieceStorage.add(piece.get(i));
 		}
+		board = new PuzzleBoard(width, height);
 	}
 	
 	public boolean doesFit(int x, int y, PuzzlePiece piece){

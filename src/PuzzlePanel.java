@@ -125,6 +125,7 @@ public class PuzzlePanel extends JPanel {
 			public void mouseMoved(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				if(tracking!=null){
+					System.out.println("Tracking:  " +tracking);
 					tracking.setCurrX(arg0.getX()-tracking.getImage().getWidth()/2);
 					tracking.setCurrY(arg0.getY()-tracking.getImage().getHeight()/2);
 					repaint();
@@ -176,7 +177,6 @@ public class PuzzlePanel extends JPanel {
 			ArrayList<PuzzlePiece> freePieces = puzzle.getFreePieces();
 			for(int i = 0; i < freePieces.size(); i++){
 				GraphicalPuzzlePiece curr =((GraphicalPuzzlePiece)freePieces.get(i));
-				System.out.println(curr.getCurrX() + "  " + curr.getCurrY());
 
 				if(x>curr.getCurrX() && x < curr.getCurrX() + curr.getImage().getWidth() && y > curr.getCurrY() && y < curr.getCurrY() + curr.getImage().getHeight()) return curr;
 			}
