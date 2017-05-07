@@ -49,6 +49,7 @@ public class JigsawPuzzle {
 	public boolean placePiece(int x, int y, PuzzlePiece piece){ 
 		if(board.isValid(x, y)){
 			board.placePiece(x, y, piece);
+			pieceStorage.remove(piece);
 			return true;
 		}
 		return false;
@@ -57,7 +58,9 @@ public class JigsawPuzzle {
 	//removes a puzzle piece from the board, the piece is now a free piece
 	public PuzzlePiece removePiece(int x, int y){
 		if(board.isOccupied(x, y)){
+			pieceStorage.add(board.getPiece(x, y));
 			board.removePiece(x, y);
+			
 		}
 		return null;
 	
@@ -65,7 +68,13 @@ public class JigsawPuzzle {
 	
 	//checks to see if the jigsaw puzzle is solved
 	public boolean isSolved(){ 
-		return false;
+		//return false;
+		for(int i = 0; i<board.getHeight();i++){
+			for(int j = 0; j<board.getWidth();j++){
+				if(!doesFit(i,j,board.getPiece(i, j))) return false;
+			}
+		}
+		return true;
 	}
 	
 	public PuzzlePiece getPiece(int x, int y){

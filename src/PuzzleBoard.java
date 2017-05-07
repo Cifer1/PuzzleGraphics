@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class PuzzleBoard {
-	private ArrayList<PuzzlePiece> list=new ArrayList<PuzzlePiece>();
+	//private ArrayList<PuzzlePiece> list=new ArrayList<PuzzlePiece>();
 	private int width;
 	private int height;
 	private PuzzlePiece[][] board = new PuzzlePiece[height][width]; 
@@ -27,7 +27,7 @@ public class PuzzleBoard {
 	public void clear(){
 		for(int i=0;i<board.length;i++){
 			for(int j = 0; j<board[i].length;j++){
-				list.add(removePiece(i,j));
+	//			list.add(removePiece(i,j));
 			}
 		}
 	}
@@ -36,7 +36,7 @@ public class PuzzleBoard {
 	
 		if(!isOccupied(x,y)){
 			board[x][y]=piece;
-			list.remove(piece);
+	//		list.remove(piece);
 			return true;
 		}
 		else{
@@ -50,7 +50,7 @@ public class PuzzleBoard {
 		if(isOccupied(x,y)){
 			PuzzlePiece p = board[x][y];
 			board[x][y]=null;
-			list.add(p);
+//			list.add(p);
 			return p;
 		}
 		else{
