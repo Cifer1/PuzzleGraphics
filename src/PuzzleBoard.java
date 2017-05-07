@@ -4,16 +4,18 @@ public class PuzzleBoard {
 	private ArrayList<PuzzlePiece> list=new ArrayList<PuzzlePiece>();
 	private int width;
 	private int height;
-	private PuzzlePiece[][] board = new PuzzlePiece[height][width]; 
+	private PuzzlePiece[][] board; 
 	
 	public PuzzleBoard(int width, int height){
 		this.height=height;
 		this.width=width;
+		board = new PuzzlePiece[height][width];
 	}
 	
 	public PuzzleBoard(){
 		width=3;
 		height=3;
+		board = new PuzzlePiece[height][width];
 	}
 	
 	public int getWidth(){
@@ -64,12 +66,13 @@ public class PuzzleBoard {
 	}
 	
 	public boolean isValid(int x, int y){
-		System.out.println("test isValid");
-		return false;
+
+		return x>0&&x<width&&y>0&&y<height;
 	}
 	
 	public boolean isOccupied(int x, int y){
-		if(board[x][y]==null) return false;
+		System.out.println(board[x][y]);
+		if(isValid(x,y) && board[x][y]==null) return false;
 		return true;
 	}
 
