@@ -24,21 +24,23 @@ public class PuzzlePiece {
 	
 	public void rotateClockwise(){
 
+	
+		
+		int temp = north;
+		north = west;
+		west = south;
+		south = east;
+		east = temp;
+		
+	}
+	
+	public void rotateCounterClockwise(){
 		int temp = north;
 		north = east;
 		east = south;
 		south = west;
 		west = temp;
 		
-	}
-	
-	public void rotateCounterClockwise(){
-
-		int temp = north;
-		north = west;
-		west = south;
-		south = east;
-		east = temp;
 	}
 	
 	public int getNorth(){

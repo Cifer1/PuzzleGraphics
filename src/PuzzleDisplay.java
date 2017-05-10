@@ -64,15 +64,23 @@ public class PuzzleDisplay extends JFrame {
 		contentPane.add(controlPanel, BorderLayout.NORTH);
 		controlPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton solveButton = new JButton("Solve");
-		solveButton.setHorizontalAlignment(SwingConstants.LEFT);
-		controlPanel.add(solveButton);
+		
 		
 		
 		
 		PuzzlePanel puzzlePanel = new PuzzlePanel();
 		puzzlePanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Puzzle", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		contentPane.add(puzzlePanel, BorderLayout.CENTER);
+		
+		JButton solveButton = new JButton("Solve");
+		solveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				puzzlePanel.solve();
+				repaint();
+			}
+		});
+		solveButton.setHorizontalAlignment(SwingConstants.LEFT);
+		controlPanel.add(solveButton);
 		
 		JButton resetButton = new JButton("Reset");
 		resetButton.addActionListener(new ActionListener() {

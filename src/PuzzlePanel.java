@@ -70,7 +70,10 @@ public class PuzzlePanel extends JPanel {
 					if(x>botLeftX&&x<botLeftX+sideLen&&y>botLeftY&&y<botLeftY+sideLen){
 						int[] coords = getBoardPosAtPoint(x,y);
 						System.out.println("x: " + coords[0]  + " y: " + coords[1]);
-						if(!puzzle.placePiece(coords[0], coords[1], tracking)) tracking.goHome();
+						if(!puzzle.placePiece(coords[0], coords[1], tracking)) {
+							System.out.println(puzzle.getPiece(coords[0], coords[1]));
+							tracking.goHome();
+						}
 						else{
 							tracking.setCurrX(coords[0] * (sideLen/3) + botLeftX - tracking.getImage().getWidth()/5);
 							tracking.setCurrY(coords[1] * (sideLen/3) + botLeftY - tracking.getImage().getWidth()/5);
@@ -212,6 +215,10 @@ public class PuzzlePanel extends JPanel {
 				if (puzzle.getPiece(i, j) != null)((GraphicalPuzzlePiece)puzzle.removePiece(i, j)).goHome();
 			}
 		}
+	}
+	public void solve(){
+		puzzle.solvePuzzle();
+		repaint();
 	}
 
 }

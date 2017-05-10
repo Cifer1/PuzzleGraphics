@@ -15,24 +15,32 @@ public class JigsawPuzzle {
 	public boolean doesFit(int x, int y, PuzzlePiece piece){
 		if(board.isOccupied(x+1, y)){
 			if(piece.getEast()+board.getPiece(x+1, y).getWest()!=0){
+				System.out.println("this piece's right part doesn't fit with the right one's left part");
+
 				return false;
 			}
 		}
 		if(board.isOccupied(x, y-1)){
 			if(piece.getNorth()+board.getPiece(x, y-1).getSouth()!=0){
+				System.out.println("this piece's top doesn't fit with the upper one's bottom");
 				return false;
 			}
 		}
 		if(board.isOccupied(x,y+1)){
 			if(piece.getSouth()+board.getPiece(x, y+1).getNorth()!=0){
+				System.out.println("this piece's bottom doesn't fit with the lower one's top");
+
 				return false;
 			}
 		}
 		if(board.isOccupied(x-1, y)){
 			if(piece.getWest()+board.getPiece(x-1, y).getEast()!=0){
+				System.out.println("this piece's left part doesn't fit with the left one's right part");
+
 				return false;
 			}
 		}
+		System.out.println("fits");
 		return true;
 	}
 	
