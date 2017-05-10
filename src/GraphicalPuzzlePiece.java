@@ -48,8 +48,8 @@ public class GraphicalPuzzlePiece extends PuzzlePiece {
 		pieceImg = op.filter(pieceImg, null);
 	}
 	@Override
-	public void rotateCounterClockwise(){
-		super.rotateCounterClockwise();
+	public void rotateCounterclockwise(){
+		super.rotateCounterclockwise();
 		AffineTransform at = new AffineTransform();
 		at.rotate(-Math.PI/2, pieceImg.getWidth()/2, pieceImg.getHeight()/2);
 		
