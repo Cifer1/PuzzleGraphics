@@ -76,7 +76,9 @@ public class JigsawPuzzle {
                 break;
             }
         }
-        return board.placePiece(x, y, piece);
+        if (this.doesFit(x, y, piece) && this.getPiece(x, y) == null)
+            return board.placePiece(x, y, piece);
+        return false;
     }
 
     /* Pops a piece off of the puzzle board and returns it.
