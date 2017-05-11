@@ -69,17 +69,26 @@ public class JigsawPuzzle {
        * [PuzzlePiece] piece - The piece to place.
 
        Returns true if the piece was successfully placed. */
-    public boolean placePiece(int x, int y, PuzzlePiece piece) {
-        for (int i = 0; i < this.pool.size(); i++) {
-            if (this.pool.get(i).equals(piece)) {
-                pool.remove(i);
-                break;
-            }
-        }
-        if (this.doesFit(x, y, piece) && this.getPiece(x, y) == null)
-            return board.placePiece(x, y, piece);
-        return false;
-    }
+//    public boolean placePiece(int x, int y, PuzzlePiece piece) {
+//        for (int i = 0; i < this.pool.size(); i++) {
+//            if (this.pool.get(i).equals(piece)) {
+//                pool.remove(i);
+//                break;
+//            }
+//            
+//        }
+//        if (this.doesFit(x, y, piece) && this.getPiece(x, y) == null)
+//            return board.placePiece(x, y, piece);
+//        return false;
+//    }
+    public boolean placePiece(int x, int y, PuzzlePiece piece){ 
+		if(!doesFit(x,y,piece)) return false;
+    	if(board.isValid(x, y)){
+			board.placePiece(x, y, piece);
+			return true;
+		}
+		return false;
+	}
 
     /* Pops a piece off of the puzzle board and returns it.
 
