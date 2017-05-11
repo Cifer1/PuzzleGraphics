@@ -71,10 +71,12 @@ public class PuzzlePanel extends JPanel {
 						int[] coords = getBoardPosAtPoint(x,y);
 						System.out.println("x: " + coords[0]  + " y: " + coords[1]);
 						if(!puzzle.placePiece(coords[0], coords[1], tracking)) {
-							System.out.println(puzzle.getPiece(coords[0], coords[1]));
+							System.out.println("doesnt fit going home " + tracking);
 							tracking.goHome();
+							repaint();
 						}
 						else{
+							System.out.println("fits, should go on board");
 							tracking.setCurrX(coords[0] * (sideLen/3) + botLeftX - tracking.getImage().getWidth()/5);
 							tracking.setCurrY(coords[1] * (sideLen/3) + botLeftY - tracking.getImage().getWidth()/5);
 						}
@@ -211,10 +213,17 @@ public class PuzzlePanel extends JPanel {
 		ArrayList<PuzzlePiece> freePieces = puzzle.getFreePieces();
 		for(int i = 0; i < freePieces.size(); i++){
 			((GraphicalPuzzlePiece) freePieces.get(i)).goHome();
+
 		}
 		for(int i = 0; i < 3; i++){
 			for(int j = 0; j < 3; j++){
-				if (puzzle.getPiece(i, j) != null)((GraphicalPuzzlePiece)puzzle.removePiece(i, j)).goHome();
+				if (puzzle.getPiece(i, j) != null){
+					GraphicalPuzzlePiece curr = ((GraphicalPuzzlePiece)puzzle.removePiece(i, j));
+					curr.goHome();
+					while(curr.rotations!=0){
+						curr.rotateClockwise();
+					}
+				}
 			}
 		}
 	}
