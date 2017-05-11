@@ -167,11 +167,13 @@ public class PuzzlePanel extends JPanel {
 
 			}
 		}
-		for(int i = 0; i < puzzle.getHeight(); i++){
-			for(int j = 0; j < puzzle.getWidth() ; j++ ){
-				if(puzzle.getPiece(j, i)!=null) {
+		for(int i = 0; i < puzzle.getWidth(); i++){
+			for(int j = 0; j < puzzle.getHeight() ; j++ ){
+				if(puzzle.getPiece(i,j)!=null) {
 					System.out.println("painting the board pieces");
-					GraphicalPuzzlePiece curr = (GraphicalPuzzlePiece) puzzle.getPiece(j, i);
+					GraphicalPuzzlePiece curr = (GraphicalPuzzlePiece) puzzle.getPiece(i, j);
+					curr.setCurrX(i * (sideLen/3) + botLeftX - curr.getImage().getWidth()/5);
+					curr.setCurrY(j * (sideLen/3) + botLeftY - curr.getImage().getWidth()/5);
 					g.drawImage(curr.getImage(), curr.getCurrX(), curr.getCurrY(), null);
 				}
 			}
