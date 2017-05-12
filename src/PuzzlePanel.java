@@ -175,6 +175,13 @@ public class PuzzlePanel extends JPanel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			AffineTransform at = new AffineTransform();
+			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+			double xScaleFactor = (double)kjun.getWidth()/screenSize.getWidth();
+			double yScaleFactor = (double)kjun.getHeight()/screenSize.getHeight();
+			at.scale(xScaleFactor, yScaleFactor);
+			AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+			kjun=op.filter(kjun, null);
 			g.drawImage(kjun, getWidth()/4 - kjun.getWidth()/2, getHeight()/4 - kjun.getHeight()/2, null);
 		}
 		
