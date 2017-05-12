@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -8,8 +9,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -22,6 +25,8 @@ public class PuzzlePanel extends JPanel {
 	private  int botLeftY;
 	private  int sideLen;
 	private GraphicalPuzzlePiece tracking;
+	private boolean solveFlag = false;
+	private boolean cheatSolveFlag = false;
 
 	/**
 	 * Create the panel.
@@ -49,9 +54,10 @@ public class PuzzlePanel extends JPanel {
 		
 		puzzle = new JigsawPuzzle(3,3,pieces);
 		addMouseListener(new MouseListener(){
-
+			
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				if(!cheatSolveFlag && solveFlag) return;
 				// TODO Auto-generated method stub
 				int x = arg0.getX();
 				int y = arg0.getY();
@@ -116,6 +122,8 @@ public class PuzzlePanel extends JPanel {
 
 			@Override
 			public void mouseDragged(MouseEvent arg0) {
+				if(!cheatSolveFlag && solveFlag) return;
+
 				// TODO Auto-generated method stub
 				if(tracking==null)tracking = getPieceAtPoint(arg0.getX(),arg0.getY());
 
@@ -128,6 +136,8 @@ public class PuzzlePanel extends JPanel {
 
 			@Override
 			public void mouseMoved(MouseEvent arg0) {
+				if(!cheatSolveFlag && solveFlag) return;
+
 				// TODO Auto-generated method stub
 				if(tracking!=null){
 					System.out.println("Tracking:  " +tracking);
@@ -141,16 +151,34 @@ public class PuzzlePanel extends JPanel {
 		});
 	}
 	public void paintComponent(Graphics g){
+		
 		g.clearRect(0, 0, getWidth(), getHeight());
 		sideLen = 70*3;
-
+		
 		botLeftX = getWidth()/2 - sideLen/2;
 		botLeftY = getHeight()/2 - sideLen/2; 
 		
-		g.drawRect(botLeftX, botLeftY, sideLen, sideLen);
+		
 		int horizLineInterval = sideLen/3;
 		int vertLineInterval  = sideLen/3;
+
+		if(solveFlag &&!cheatSolveFlag){
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+			g.drawString("CONGRATS!", getWidth()/2-300, getWidth()/2-100);
+			return;
+		}
+		else if(cheatSolveFlag){
+			BufferedImage kjun = null;
+			try {
+				kjun = ImageIO.read(new File("img/proud.jpg"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			g.drawImage(kjun, getWidth()/4 - kjun.getWidth()/2, getHeight()/4 - kjun.getHeight()/2, null);
+		}
 		
+		g.drawRect(botLeftX, botLeftY, sideLen, sideLen);
 		for(int i = 1; i < 3; i++){
 			g.drawLine(botLeftX+horizLineInterval*i, botLeftY, botLeftX+horizLineInterval*i, botLeftY+sideLen);
 			g.drawLine(botLeftX, botLeftY+vertLineInterval*i, botLeftX+sideLen, botLeftY+vertLineInterval*i);
@@ -210,6 +238,8 @@ public class PuzzlePanel extends JPanel {
 		return null;
 	}
 	public void reset(){
+		cheatSolveFlag = false;
+		solveFlag = false;
 		ArrayList<PuzzlePiece> freePieces = puzzle.getFreePieces();
 		for(int i = 0; i < freePieces.size(); i++){
 			((GraphicalPuzzlePiece) freePieces.get(i)).goHome();
@@ -229,6 +259,7 @@ public class PuzzlePanel extends JPanel {
 	}
 	public void solve(){
 		reset();
+		cheatSolveFlag = true;
 		puzzle.solvePuzzle();
 		repaint();
 	}

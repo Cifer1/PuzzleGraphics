@@ -25,6 +25,7 @@ import javax.swing.BoxLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class PuzzleDisplay extends JFrame {
 
@@ -91,6 +92,9 @@ public class PuzzleDisplay extends JFrame {
 		});
 		resetButton.setHorizontalAlignment(SwingConstants.LEFT);
 		controlPanel.add(resetButton);
+		
+		JLabel lblRotateControllclick = new JLabel("Rotate: Control+LClick ");
+		controlPanel.add(lblRotateControllclick);
 		
 		
 		
