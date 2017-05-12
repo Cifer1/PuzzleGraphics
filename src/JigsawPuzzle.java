@@ -82,7 +82,7 @@ public class JigsawPuzzle {
 //        return false;
 //    }
     public boolean placePiece(int x, int y, PuzzlePiece piece){ 
-		if(!doesFit(x,y,piece)) return false;
+		if(!doesFit(x,y,piece)||board.isOccupied(x,y)) return false;
     	if(board.isValid(x, y)){
 			board.placePiece(x, y, piece);
 			return true;

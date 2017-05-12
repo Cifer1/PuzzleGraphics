@@ -71,7 +71,7 @@ public class PuzzlePanel extends JPanel {
 						int[] coords = getBoardPosAtPoint(x,y);
 						System.out.println("x: " + coords[0]  + " y: " + coords[1]);
 						if(!puzzle.placePiece(coords[0], coords[1], tracking)) {
-							System.out.println("doesnt fit going home " + tracking);
+							System.out.println("doesnt fit/already occupied going home " + tracking);
 							tracking.goHome();
 							repaint();
 						}
@@ -228,6 +228,7 @@ public class PuzzlePanel extends JPanel {
 		}
 	}
 	public void solve(){
+		reset();
 		puzzle.solvePuzzle();
 		repaint();
 	}
