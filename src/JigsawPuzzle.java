@@ -70,15 +70,17 @@ public class JigsawPuzzle {
 
        Returns true if the piece was successfully placed. */
     public boolean placePiece(int x, int y, PuzzlePiece piece) {
-        for (int i = 0; i < this.pool.size(); i++) {
-            if (this.pool.get(i).equals(piece)) {
-                pool.remove(i);
-                break;
-            }
-            
+        if (this.doesFit(x, y, piece) && this.getPiece(x, y) == null){
+
+	        for (int i = 0; i < this.pool.size(); i++) {
+	            if (this.pool.get(i).equals(piece)) {
+	                pool.remove(i);
+	                break;
+	            }
+	            
+	        }
+	        return board.placePiece(x, y, piece);
         }
-        if (this.doesFit(x, y, piece) && this.getPiece(x, y) == null)
-            return board.placePiece(x, y, piece);
         return false;
     }
 
