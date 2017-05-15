@@ -164,8 +164,7 @@ public class PuzzlePanel extends JPanel {
 
 		if(solveFlag &&!cheatSolveFlag){
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
-			g.drawString("CONGRATS!", getWidth()/2-300, getWidth()/2-100);
-			return;
+			g.drawString("CONGRATS!", getWidth()/2-300, getWidth()/2-200);
 		}
 		else if(cheatSolveFlag){
 			BufferedImage kjun = null;
