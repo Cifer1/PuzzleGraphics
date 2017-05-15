@@ -57,7 +57,7 @@ public class PuzzlePanel extends JPanel {
 			
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(!cheatSolveFlag && solveFlag) return;
+				if(solveFlag) return;
 				// TODO Auto-generated method stub
 				int x = arg0.getX();
 				int y = arg0.getY();
@@ -122,7 +122,7 @@ public class PuzzlePanel extends JPanel {
 
 			@Override
 			public void mouseDragged(MouseEvent arg0) {
-				if(!cheatSolveFlag && solveFlag) return;
+				if(solveFlag) return;
 
 				// TODO Auto-generated method stub
 				if(tracking==null)tracking = getPieceAtPoint(arg0.getX(),arg0.getY());
@@ -136,7 +136,7 @@ public class PuzzlePanel extends JPanel {
 
 			@Override
 			public void mouseMoved(MouseEvent arg0) {
-				if(!cheatSolveFlag && solveFlag) return;
+				if(solveFlag) return;
 
 				// TODO Auto-generated method stub
 				if(tracking!=null){
