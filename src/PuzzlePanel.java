@@ -245,6 +245,7 @@ public class PuzzlePanel extends JPanel {
 		return null;
 	}
 	public void reset(){
+		tracking = null;
 		cheatSolveFlag = false;
 		solveFlag = false;
 		ArrayList<PuzzlePiece> freePieces = puzzle.getFreePieces();
