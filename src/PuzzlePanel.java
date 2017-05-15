@@ -151,7 +151,7 @@ public class PuzzlePanel extends JPanel {
 		});
 	}
 	public void paintComponent(Graphics g){
-		
+		solveFlag = puzzle.isSolved();
 		g.clearRect(0, 0, getWidth(), getHeight());
 		sideLen = 70*3;
 		
