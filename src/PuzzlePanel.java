@@ -27,11 +27,19 @@ public class PuzzlePanel extends JPanel {
 	private GraphicalPuzzlePiece tracking;
 	private boolean solveFlag = false;
 	private boolean cheatSolveFlag = false;
+	private BufferedImage kjun;
 
 	/**
 	 * Create the panel.
 	 */
 	public PuzzlePanel() {
+		kjun = null;
+		try {
+			kjun = ImageIO.read(new File("img/proud.jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0};
 		gridBagLayout.rowHeights = new int[]{0};
@@ -167,13 +175,7 @@ public class PuzzlePanel extends JPanel {
 			g.drawString("CONGRATS!", getWidth()/2-300, getWidth()/2-200);
 		}
 		else if(cheatSolveFlag){
-			BufferedImage kjun = null;
-			try {
-				kjun = ImageIO.read(new File("img/proud.jpg"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 			AffineTransform at = new AffineTransform();
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 			double xScaleFactor = (double)kjun.getWidth()/getWidth();
