@@ -268,6 +268,7 @@ public class PuzzlePanel extends JPanel {
 	public void solve(){
 		reset();
 		cheatSolveFlag = true;
+		solveFlag = true;
 		puzzle.solvePuzzle();
 		repaint();
 	}
