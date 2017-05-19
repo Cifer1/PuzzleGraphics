@@ -183,8 +183,7 @@ public class PuzzlePanel extends JPanel {
 			double yScaleFactor = (double)kjun.getHeight()/getHeight();
 			at.scale(xScaleFactor, yScaleFactor);
 			AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-			kjun=op.filter(kjun, null);
-			g.drawImage(kjun, getWidth()/2 - kjun.getWidth()/2, getHeight()/4 - kjun.getHeight()/2, null);
+			g.drawImage(op.filter(kjun, null), getWidth()/2 - op.filter(kjun, null).getWidth()/2, getHeight()/4 - op.filter(kjun, null).getHeight()/2, null);
 		}
 		
 		g.drawRect(botLeftX, botLeftY, sideLen, sideLen);
