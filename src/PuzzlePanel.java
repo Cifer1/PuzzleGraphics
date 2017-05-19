@@ -50,6 +50,7 @@ public class PuzzlePanel extends JPanel {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int horizOffset = (int) (screenSize.getWidth()/25);
 		int vertOffset = (int) (screenSize.getWidth()/25);
+		
 		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.CLUB_OUT, PuzzlePiece.HEART_OUT, PuzzlePiece.DIAMOND_IN, PuzzlePiece.CLUB_IN, new File("img/piece_1.png"), horizOffset, vertOffset));
 		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.SPADE_OUT, PuzzlePiece.DIAMOND_OUT, PuzzlePiece.SPADE_IN, PuzzlePiece.HEART_IN, new File("img/piece_2.png"), horizOffset, vertOffset*3));
 		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.HEART_OUT, PuzzlePiece.SPADE_OUT, PuzzlePiece.SPADE_IN, PuzzlePiece.CLUB_IN, new File("img/piece_3.png"), horizOffset, vertOffset*5));
