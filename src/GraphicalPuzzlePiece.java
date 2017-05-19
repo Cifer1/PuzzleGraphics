@@ -28,14 +28,14 @@ public class GraphicalPuzzlePiece extends PuzzlePiece {
 		try{
 			pieceImg = ImageIO.read(src);
 		} catch(IOException e){
-			System.out.println(e);
+
 			e.printStackTrace();
 		}
 		this.homeX = homeX;
 		currX = homeX;
 		this.homeY = homeY;
 		currY = homeY;
-		System.out.println("img height: " + pieceImg.getHeight());
+
 	}
 
 	@Override

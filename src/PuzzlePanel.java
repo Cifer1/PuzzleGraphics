@@ -77,21 +77,20 @@ public class PuzzlePanel extends JPanel {
 					return;
 				}
 				if(tracking==null){
-				
-					System.out.println("click x: " + x + "click y: " + y );
+
 					tracking = getPieceAtPoint(x,y);
 				}
 				else{
 					if(x>botLeftX&&x<botLeftX+sideLen&&y>botLeftY&&y<botLeftY+sideLen){
 						int[] coords = getBoardPosAtPoint(x,y);
-						System.out.println("x: " + coords[0]  + " y: " + coords[1]);
+
 						if(!puzzle.placePiece(coords[0], coords[1], tracking)) {
-							System.out.println("doesnt fit/already occupied going home " + tracking);
+
 							tracking.goHome();
 							repaint();
 						}
 						else{
-							System.out.println("fits, should go on board");
+
 							tracking.setCurrX(coords[0] * (sideLen/3) + botLeftX - tracking.getImage().getWidth()/5);
 							tracking.setCurrY(coords[1] * (sideLen/3) + botLeftY - tracking.getImage().getWidth()/5);
 						}
@@ -149,7 +148,7 @@ public class PuzzlePanel extends JPanel {
 
 				// TODO Auto-generated method stub
 				if(tracking!=null){
-					System.out.println("Tracking:  " +tracking);
+
 					tracking.setCurrX(arg0.getX()-tracking.getImage().getWidth()/2);
 					tracking.setCurrY(arg0.getY()-tracking.getImage().getHeight()/2);
 					repaint();
@@ -208,7 +207,7 @@ public class PuzzlePanel extends JPanel {
 		for(int i = 0; i < puzzle.getWidth(); i++){
 			for(int j = 0; j < puzzle.getHeight() ; j++ ){
 				if(puzzle.getPiece(i,j)!=null) {
-					System.out.println("painting the board pieces");
+
 					GraphicalPuzzlePiece curr = (GraphicalPuzzlePiece) puzzle.getPiece(i, j);
 					curr.setCurrX(i * (sideLen/3) + botLeftX - curr.getImage().getWidth()/5);
 					curr.setCurrY(j * (sideLen/3) + botLeftY - curr.getImage().getWidth()/5);
