@@ -19,6 +19,10 @@ import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 
+//PuzzlePanel is the class where the drawing of the jigsqw puzzle occurs. Private data is a JigsawPuzzle,
+// coordinates for dimensions, a graphical puzzle Piece, two booleans to determine if the puzzle has been solved by the user
+// or by the computer, and a buffered image of kim jong-un
+
 public class PuzzlePanel extends JPanel {
 	private JigsawPuzzle puzzle;
 	private  int botLeftX;
@@ -32,6 +36,8 @@ public class PuzzlePanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	
+	// This constructor takes in no parameters and creates a puzzle with the 9 images.
 	public PuzzlePanel() {
 		kjun = null;
 		try {
@@ -62,24 +68,29 @@ public class PuzzlePanel extends JPanel {
 		pieces.add(new GraphicalPuzzlePiece(PuzzlePiece.DIAMOND_OUT, PuzzlePiece.CLUB_OUT, PuzzlePiece.CLUB_IN, PuzzlePiece.DIAMOND_IN, new File("img/piece_9.png"), horizOffset*9, vertOffset));
 		
 		puzzle = new JigsawPuzzle(3,3,pieces);
+		
 		addMouseListener(new MouseListener(){
-			
+		
+			// this method deals with the cases for when the  mouse is clicked 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(solveFlag) return;
 				// TODO Auto-generated method stub
 				int x = arg0.getX();
 				int y = arg0.getY();
+				// if the control button is also hit, then the graphical puzzle piece will be rotated
 				if(arg0.isControlDown()&&!(x>botLeftX&&x<botLeftX+sideLen&&y>botLeftY&&y<botLeftY+sideLen)){
 					GraphicalPuzzlePiece rotated = getPieceAtPoint(x,y);
 					if(rotated!=null) rotated.rotateClockwise();
 					repaint();
 					return;
 				}
+				
 				if(tracking==null){
 
 					tracking = getPieceAtPoint(x,y);
 				}
+			
 				else{
 					if(x>botLeftX&&x<botLeftX+sideLen&&y>botLeftY&&y<botLeftY+sideLen){
 						int[] coords = getBoardPosAtPoint(x,y);
@@ -129,12 +140,14 @@ public class PuzzlePanel extends JPanel {
 		addMouseMotionListener(new MouseMotionListener(){
 
 			@Override
+			//this method deals when the mouse is dragged
 			public void mouseDragged(MouseEvent arg0) {
 				if(solveFlag) return;
 
 				// TODO Auto-generated method stub
 				if(tracking==null)tracking = getPieceAtPoint(arg0.getX(),arg0.getY());
-
+				// if the piece is being dragged, the piece will be moved to where its being dragged and the coordinates will
+				// be updated
 				if(tracking!=null){
 					tracking.setCurrX(arg0.getX()-tracking.getImage().getWidth()/2);
 					tracking.setCurrY(arg0.getY()-tracking.getImage().getHeight()/2);
@@ -143,10 +156,13 @@ public class PuzzlePanel extends JPanel {
 			}
 
 			@Override
+			// this method deals with if the mouse is being moved
 			public void mouseMoved(MouseEvent arg0) {
+				// if the puzzle has been solved, then return
 				if(solveFlag) return;
 
 				// TODO Auto-generated method stub
+				// if the mouse is being moved, the coordinates are updated
 				if(tracking!=null){
 
 					tracking.setCurrX(arg0.getX()-tracking.getImage().getWidth()/2);
@@ -158,7 +174,9 @@ public class PuzzlePanel extends JPanel {
 			
 		});
 	}
+	// Method will deal with when the puzzle has been solved, both by the computer, and by the user
 	public void paintComponent(Graphics g){
+		// if the puzzle is solved manually, a congrats message is created, and the puzzle grid is cleared
 		solveFlag = puzzle.isSolved();
 		g.clearRect(0, 0, getWidth(), getHeight());
 		sideLen = 70*3;
@@ -174,6 +192,7 @@ public class PuzzlePanel extends JPanel {
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
 			g.drawString("CONGRATS!", getWidth()/2-300, getWidth()/2-200);
 		}
+		// if the user allows the computer to solve it, the image of kim jong un pops up
 		else if(cheatSolveFlag){
 			
 			AffineTransform at = new AffineTransform();
@@ -184,13 +203,14 @@ public class PuzzlePanel extends JPanel {
 			AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 			g.drawImage(op.filter(kjun, null), getWidth()/2 - op.filter(kjun, null).getWidth()/2, getHeight()/4 - op.filter(kjun, null).getHeight()/2, null);
 		}
-		
+		// drawing the rectangle with the gridlines
 		g.drawRect(botLeftX, botLeftY, sideLen, sideLen);
 		for(int i = 1; i < 3; i++){
 			g.drawLine(botLeftX+horizLineInterval*i, botLeftY, botLeftX+horizLineInterval*i, botLeftY+sideLen);
 			g.drawLine(botLeftX, botLeftY+vertLineInterval*i, botLeftX+sideLen, botLeftY+vertLineInterval*i);
 
 		}
+		//gets the array list of free pieces that have not been inserted into the puzzle yet
 		ArrayList<PuzzlePiece> freePieces = puzzle.getFreePieces();
 		for(int i = 0; i < freePieces.size();i++){
 //			System.out.println("I'm printing freePieces");
@@ -198,12 +218,13 @@ public class PuzzlePanel extends JPanel {
 			if(freePieces.get(i) instanceof GraphicalPuzzlePiece){
 //				System.out.println("it's graphical");
 				GraphicalPuzzlePiece curr = (GraphicalPuzzlePiece) freePieces.get(i);
-
+				// drawing the graphical puzzle piece image
 				g.drawImage(curr.getImage(), curr.getCurrX(), curr.getCurrY(), null);
 
 
 			}
 		}
+		// updating the board every time a new piece is placed. 
 		for(int i = 0; i < puzzle.getWidth(); i++){
 			for(int j = 0; j < puzzle.getHeight() ; j++ ){
 				if(puzzle.getPiece(i,j)!=null) {
@@ -216,14 +237,18 @@ public class PuzzlePanel extends JPanel {
 			}
 		}
 	}
+	// returns the free pieces that are not in the board. There are no parameters
 	public ArrayList<PuzzlePiece> getFreePieces(){
 		return puzzle.getFreePieces();
 	}
+	// returns a graphical puzzle piece at a specific place in the grid. The parameters are the x and y coordinates in the grid
 	public GraphicalPuzzlePiece getPieceAtPoint(int x, int y){
+		// the point asked is a valid point, the piece is returned
 		if((x>(botLeftX)&&x<botLeftX+sideLen) && (y>botLeftY&&y<botLeftY+sideLen)){
 			int[] coords = getBoardPosAtPoint(x,y);
 			return (GraphicalPuzzlePiece) puzzle.removePiece(coords[0], coords[1]);
 		}
+		// if not, then nothing is returned
 		else{
 			ArrayList<PuzzlePiece> freePieces = puzzle.getFreePieces();
 			for(int i = 0; i < freePieces.size(); i++){
@@ -235,8 +260,10 @@ public class PuzzlePanel extends JPanel {
 
 		}
 	}
+	// method takes in an x and y coordinate and returns an array of the board position at a specific point. 
 	public int[] getBoardPosAtPoint(int x, int y){
 		int[] coords = new int[2];
+		// checking to see if its a valid point. If not, then return null.
 		if(x>botLeftX && x<botLeftX+sideLen&& y>botLeftY&&y<botLeftY+sideLen){
 			coords[0] = (x-botLeftX)/(sideLen/3);
 			coords[1] = (y-botLeftY)/(sideLen/3);
@@ -244,6 +271,7 @@ public class PuzzlePanel extends JPanel {
 		}
 		return null;
 	}
+	// method will reset the board and place the pieces back into the getFreePieces arraylist. No parameters
 	public void reset(){
 		tracking = null;
 		cheatSolveFlag = false;
@@ -265,8 +293,11 @@ public class PuzzlePanel extends JPanel {
 			}
 		}
 	}
+	// solves the puzzle. No parameters
 	public void solve(){
+		// if the puzzle is already solved, return. 
 		if(solveFlag) return;
+		//otherwise, reset the board and then call solve. 
 		reset();
 		cheatSolveFlag = true;
 		solveFlag = true;
