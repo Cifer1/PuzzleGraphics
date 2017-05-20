@@ -27,6 +27,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 
+// In the display class, the private data is a content pane. We create solve and reset buttons and a JPanel on which
+// everything is drawn. 
 public class PuzzleDisplay extends JFrame {
 
 	private JPanel contentPane;
@@ -61,6 +63,7 @@ public class PuzzleDisplay extends JFrame {
 		setResizable(false);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
+		// Creating the control panel
 		JPanel controlPanel = new JPanel();
 		contentPane.add(controlPanel, BorderLayout.NORTH);
 		controlPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -68,12 +71,13 @@ public class PuzzleDisplay extends JFrame {
 		
 		
 		
-		
+		// Creating the puzzle panel with the title Puzzle
 		PuzzlePanel puzzlePanel = new PuzzlePanel();
 		puzzlePanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Puzzle", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		contentPane.add(puzzlePanel, BorderLayout.CENTER);
-		
+		// Creating a JButton for solve
 		JButton solveButton = new JButton("Solve");
+		// when the solve button is clicked, the solve method is called
 		solveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				puzzlePanel.solve();
@@ -82,8 +86,9 @@ public class PuzzleDisplay extends JFrame {
 		});
 		solveButton.setHorizontalAlignment(SwingConstants.LEFT);
 		controlPanel.add(solveButton);
-		
+		// Creating a JButton for reset
 		JButton resetButton = new JButton("Reset");
+		// when the button is clicked, the reset method is called
 		resetButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				puzzlePanel.reset();
@@ -92,8 +97,8 @@ public class PuzzleDisplay extends JFrame {
 		});
 		resetButton.setHorizontalAlignment(SwingConstants.LEFT);
 		controlPanel.add(resetButton);
-		
-		JLabel lblRotateControllclick = new JLabel("Rotate: Control+LClick ");
+		// Adding a label to give instructions on how to click
+		JLabel lblRotateControllclick = new JLabel("Rotate: Control+Click ");
 		controlPanel.add(lblRotateControllclick);
 		
 		
