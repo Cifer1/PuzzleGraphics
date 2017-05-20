@@ -27,8 +27,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 
-// In the display class, the private data is a content pane. We create solve and reset buttons and a JPanel on which
-// everything is drawn. 
+/* In the display class, the private data is a content pane. We create solve and reset buttons and a JPanel on which
+ everything is drawn. */
 public class PuzzleDisplay extends JFrame {
 
 	private JPanel contentPane;

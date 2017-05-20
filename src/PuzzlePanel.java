@@ -19,9 +19,9 @@ import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 
-//PuzzlePanel is the class where the drawing of the jigsqw puzzle occurs. Private data is a JigsawPuzzle,
-// coordinates for dimensions, a graphical puzzle Piece, two booleans to determine if the puzzle has been solved by the user
-// or by the computer, and a buffered image of kim jong-un
+/*PuzzlePanel is the class where the drawing of the jigsqw puzzle occurs. Private data is a JigsawPuzzle,
+ coordinates for dimensions, a graphical puzzle Piece, two booleans to determine if the puzzle has been solved by the user
+or by the computer, and a buffered image of kim jong-un*/
 
 public class PuzzlePanel extends JPanel {
 	private JigsawPuzzle puzzle;
@@ -146,8 +146,8 @@ public class PuzzlePanel extends JPanel {
 
 				// TODO Auto-generated method stub
 				if(tracking==null)tracking = getPieceAtPoint(arg0.getX(),arg0.getY());
-				// if the piece is being dragged, the piece will be moved to where its being dragged and the coordinates will
-				// be updated
+				/* if the piece is being dragged, the piece will be moved to where its being dragged and the coordinates will
+				 be updated */
 				if(tracking!=null){
 					tracking.setCurrX(arg0.getX()-tracking.getImage().getWidth()/2);
 					tracking.setCurrY(arg0.getY()-tracking.getImage().getHeight()/2);
@@ -161,7 +161,6 @@ public class PuzzlePanel extends JPanel {
 				// if the puzzle has been solved, then return
 				if(solveFlag) return;
 
-				// TODO Auto-generated method stub
 				// if the mouse is being moved, the coordinates are updated
 				if(tracking!=null){
 
@@ -213,10 +212,7 @@ public class PuzzlePanel extends JPanel {
 		//gets the array list of free pieces that have not been inserted into the puzzle yet
 		ArrayList<PuzzlePiece> freePieces = puzzle.getFreePieces();
 		for(int i = 0; i < freePieces.size();i++){
-//			System.out.println("I'm printing freePieces");
-//			System.out.println(freePieces.get(i));
 			if(freePieces.get(i) instanceof GraphicalPuzzlePiece){
-//				System.out.println("it's graphical");
 				GraphicalPuzzlePiece curr = (GraphicalPuzzlePiece) freePieces.get(i);
 				// drawing the graphical puzzle piece image
 				g.drawImage(curr.getImage(), curr.getCurrX(), curr.getCurrY(), null);
